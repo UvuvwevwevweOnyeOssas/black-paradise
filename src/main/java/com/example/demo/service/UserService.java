@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserTypes;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -19,9 +22,7 @@ public class UserService {
     @Value("${default.admin.code}")
     private String adminCode;
 
-
     private final UserRepository userRepository;
-
 
     public UserDTO register(UserDTO userDTO, int type) {
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum()))
@@ -35,16 +36,24 @@ public class UserService {
         if (type == 2) {
             if(!Objects.equals(adminCode, userDTO.getAdminCode()))
                 throw new RuntimeException("Code must be equal");
-
             user = UserMapper.toEntityForDateGirl(userDTO);
             user = userRepository.save(user);
         }
-
         if (type == 3) {
             user = UserMapper.toEntityForAdmin(userDTO);
             user = userRepository.save(user);
         }
-
         return UserMapper.toDto(user);
+    }
+
+    public List<UserDTO> getAll(int type){
+        List<User> users= new ArrayList<>();
+        if(type==1)
+            users=userRepository.findAllByUserTypes(UserTypes.HORNY_GUY );
+        if(type==2)
+            users=userRepository.findAllByUserTypes(UserTypes.DATE_GIRL);
+        if(type==3)
+            users=userRepository.findAllByUserTypes(UserTypes.ADMIN );
+        return UserMapper.entityToDTOList(users);
     }
 }

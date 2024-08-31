@@ -5,6 +5,8 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.UserTypes;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserMapper {
 
@@ -61,5 +63,11 @@ public class UserMapper {
                 .phoneNum(dto.getPhoneNum())
                 .longitude(dto.getLongitude())
                 .build();
+    }
+    public static List<UserDTO> entityToDTOList(final List<User> users) {
+        return users.stream()
+                .map(UserMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }
