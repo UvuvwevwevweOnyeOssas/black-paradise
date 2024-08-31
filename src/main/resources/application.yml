@@ -1,0 +1,16 @@
+default:
+  admin:
+    code: 12345
+
+
+
+spring:
+  main:
+    banner-mode: CONSOLE
+  application:
+    version: 1.0.0
+    name: DateGirl-SYSTEM
+  profiles:
+    active: dev
+server:
+  port: 8080
