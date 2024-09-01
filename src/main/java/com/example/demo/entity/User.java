@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Builder
@@ -27,6 +26,7 @@ public class User {
     private UserTypes userTypes;
     private String phoneNum;
     private String email;
+    private String password;
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;

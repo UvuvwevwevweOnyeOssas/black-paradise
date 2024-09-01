@@ -22,6 +22,7 @@ public class UserDTO {
     private UserTypes userTypes;
     private String phoneNum;
     private String email;
+    private String password;
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;

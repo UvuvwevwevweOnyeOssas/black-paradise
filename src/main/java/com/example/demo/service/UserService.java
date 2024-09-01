@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.common.AUTHResponse;
+import com.example.demo.common.Constant;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserTypes;
@@ -18,24 +20,24 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
-
     @Value("${default.admin.code}")
     private String adminCode;
 
     private final UserRepository userRepository;
 
-    public UserDTO register(UserDTO userDTO, int type) {
-        if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum()))
-            throw new RuntimeException("User already existed in system");
+    public AUTHResponse register(UserDTO userDTO, int type) {
+        if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
+            return AUTHResponse.fail(Constant.USER_REGISTERED);
+        }
         User user = new User();
         if (type == 1){
             user = UserMapper.toEntityForHornyGuy(userDTO);
             user = userRepository.save(user);
         }
-
         if (type == 2) {
-            if(!Objects.equals(adminCode, userDTO.getAdminCode()))
-                throw new RuntimeException("Code must be equal");
+            if(!Objects.equals(adminCode, userDTO.getAdminCode())) {
+                return AUTHResponse.fail(Constant.ADMIN_CODE);
+            }
             user = UserMapper.toEntityForDateGirl(userDTO);
             user = userRepository.save(user);
         }
@@ -43,7 +45,7 @@ public class UserService {
             user = UserMapper.toEntityForAdmin(userDTO);
             user = userRepository.save(user);
         }
-        return UserMapper.toDto(user);
+        return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
     }
 
     public List<UserDTO> getAll(int type){
