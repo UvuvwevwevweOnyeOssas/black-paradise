@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.UserTypes;
+import com.example.demo.entity.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class UserDTO {
 
     private Long id;
     private String name;
-    private UserTypes userTypes;
+    private Role userTypes;
     private String phoneNum;
     private String email;
     private String password;
@@ -28,5 +28,5 @@ public class UserDTO {
     private BigDecimal longitude;
     private String referenceCode;
     private String adminCode;
-    private LocalDate createdAt;
+    private String createdAt;
 }
