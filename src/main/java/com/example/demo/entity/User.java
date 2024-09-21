@@ -36,5 +36,11 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+        if (profile != null && profile.getUser() != this) {
+            profile.setUser(this); // Set the user on the profile side
+        }
+    }
 
 }

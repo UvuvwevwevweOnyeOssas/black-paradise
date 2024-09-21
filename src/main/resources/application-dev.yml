@@ -16,3 +16,22 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
+
+girl:
+  file:
+    path:
+      faceImage:
+        absolutePath: /home/test/girl/image/face/
+        relativePath: /image/girl/image/face/
+      backImage:
+        absolutePath: /home/test/girl/image/back/
+        relativePath: /image/girl/image/back/
+      sideImage:
+        absolutePath: /home/test/girl/image/side/
+        relativePath: /image/girl/image/side/
+      blurImage:
+        absolutePath: /home/test/girl/image/blur/
+        relativePath: /image/girl/image/blur/
+      frontImage:
+        absolutePath: /home/test/girl/image/front/
+        relativePath: /image/girl/image/front/

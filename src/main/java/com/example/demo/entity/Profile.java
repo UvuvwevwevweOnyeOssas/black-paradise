@@ -31,7 +31,12 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null && user.getProfile() != this) {
+            user.setProfile(this); // Set the profile on the user side
+        }
+    }
 
 
 }
