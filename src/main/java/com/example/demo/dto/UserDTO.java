@@ -24,6 +24,7 @@ public class UserDTO {
     private String email;
     private String password;
     private String address;
+    private long amount;
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String referenceCode;

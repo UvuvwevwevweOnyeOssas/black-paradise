@@ -32,6 +32,7 @@ public class SecurityConfiguration {
             "/api/v1/auth/**",
             "/api/v1/horny-guy/register",
             "/api/v1/date-girl/register",
+            "/api/v1/admin/register",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
@@ -89,7 +90,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:9090/swagger-ui/**"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080/swagger-ui/**"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

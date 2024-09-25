@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -31,23 +32,45 @@ public class UserService {
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
             return AUTHResponse.fail(Constant.USER_REGISTERED);
         }
-        User user = new User();
-        if (type == 1){
-            user = UserMapper.toEntityForHornyGuy(userDTO, passwordEncoder);
-            user = userRepository.save(user);
-        }
-        if (type == 2) {
-            if(!Objects.equals(adminCode, userDTO.getAdminCode())) {
-                return AUTHResponse.fail(Constant.ADMIN_CODE);
-            }
-            user = UserMapper.toEntityForDateGirl(userDTO, passwordEncoder);
-            user = userRepository.save(user);
-        }
-        if (type == 3) {
-            user = UserMapper.toEntityForAdmin(userDTO, passwordEncoder);
-            user = userRepository.save(user);
+        User user;
+        switch (type) {
+            case 1:
+                user = UserMapper.toEntityForHornyGuy(userDTO, passwordEncoder);
+                user = userRepository.save(user);
+                break;
+            case 2:
+                if (!Objects.equals(adminCode, userDTO.getAdminCode())) {
+                    return AUTHResponse.fail(Constant.ADMIN_CODE);
+                }
+                user = UserMapper.toEntityForDateGirl(userDTO, passwordEncoder);
+                String userCode = generateUserCode(userDTO.getName(), userDTO.getAmount());
+                user.setReferenceCode(userCode);
+                user = userRepository.save(user);
+                break;
+            case 3:
+                user = UserMapper.toEntityForAdmin(userDTO, passwordEncoder);
+                user = userRepository.save(user);
+                break;
+            default:
+                return AUTHResponse.fail(Constant.INVALID_USER_TYPE);
         }
         return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
+    }
+
+    private String generateUserCode(String name, long amount) {
+        String[] nameParts = name.split(" ");
+        StringBuilder initials = new StringBuilder();
+
+        for (String part : nameParts) {
+            if (!part.isEmpty()) {
+                initials.append(part.charAt(0));
+            }
+        }
+
+        String userLevelPrefix = amount >= 1000000 ? "H" : "N";
+        Random random = new Random();
+        int randomNumber = 100000 + random.nextInt(900000);
+        return userLevelPrefix + initials.toString().toUpperCase() + randomNumber;
     }
 
     public List<UserDTO> getAll(int type){

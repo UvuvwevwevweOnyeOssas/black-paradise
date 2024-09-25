@@ -18,7 +18,7 @@ public class AdminController {
     private final UserService userService;
     private final ProfileService profileService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<AUTHResponse> register(@RequestBody UserDTO userDTO) {
         int type = 3;
         return ResponseEntity.ok(userService.register(userDTO, type));

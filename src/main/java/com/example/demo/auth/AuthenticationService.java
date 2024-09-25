@@ -120,8 +120,8 @@ public class AuthenticationService {
     }
 
     public AUTHResponse register(UserDTO userDTO, int type) {
-        if(!userDTO.getAdminCode().equals(adminCode))
-            throw new ApplicationErrorException("Admin code not match");
+//        if(!userDTO.getAdminCode().equals(adminCode))
+//            throw new ApplicationErrorException("Admin code not match");
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
             return AUTHResponse.fail(Constant.USER_REGISTERED);
         }
@@ -131,6 +131,5 @@ public class AuthenticationService {
             user = userRepository.save(user);
         }
         return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
-
     }
 }

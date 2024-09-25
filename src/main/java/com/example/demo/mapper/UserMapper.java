@@ -1,12 +1,11 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.User;
 import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
 import com.example.demo.util.DateUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +18,7 @@ public class UserMapper {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .address(dto.getAddress())
                 .userTypes(Role.HORNY_GUY)
+                .amount(dto.getAmount())
                 .latitude(dto.getLatitude())
                 .createdAt(DateUtils.stringToLongDate(dto.getCreatedAt()))
                 .phoneNum(dto.getPhoneNum())

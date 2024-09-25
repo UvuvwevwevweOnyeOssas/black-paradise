@@ -6,6 +6,7 @@ public class Constant {
     public static final String GET_ALL = "Fetched all data from system.";
 
     /*user*/
+    public static final String INVALID_USER_TYPE = "Invalid user type.";
     public static final String USER_EXISTED = "User existed in system.";
     public static final String USER_REGISTERED = "User registered in system.";
     public static final String USER_REGISTER_SUCCESS = "Your register successfully.";

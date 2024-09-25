@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/horny-guy")
-@PreAuthorize("hasAnyRole('ADMIN', 'HORNY_GUY')")
+//@PreAuthorize("hasAnyRole('ADMIN', 'HORNY_GUY')")
 public class HornyGuyController {
     private final UserService userService;
 
