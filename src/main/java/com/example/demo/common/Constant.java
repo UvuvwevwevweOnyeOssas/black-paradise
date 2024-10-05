@@ -14,7 +14,7 @@ public class Constant {
     public static final String USER_FETCHED = "User's data fetched in system.";
     public static final String USER_NOT_FOUND = "User not found in system.";
     public static final String USER_NOT_ALLOW = "User not allow because premium account is expired (Or) Your location not allow to the system.";
-
+    public static final String USER_PASS_CHANGE_SUCCESS="User Password Change Success";
     public static final String PASSWORD_NOT_MATCH = "Your password and old password from system is not match.";
     public static final String PASSWORD_UPDATED = "Your password updated in system.";
     public static final String ADMIN_CODE = "Your code must be equal.";

@@ -131,5 +131,25 @@ public class AuthenticationService {
             user = userRepository.save(user);
         }
         return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
+
+    }
+
+    public AUTHResponse changePassword(String email, ChangePasswordRequestDTO request) {
+        // Fetch the user
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return AUTHResponse.fail(Constant.USER_NOT_FOUND, "User not found");
+        }
+
+        // Verify the old password
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            return AUTHResponse.fail("Old password is incorrect");
+        }
+
+        // Update with the new password
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return AUTHResponse.success(Constant.USER_PASS_CHANGE_SUCCESS,"User password Change Success");
     }
 }
