@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +64,7 @@ public class AuthenticationService {
         return AUTHResponse.success(Constant.AUTH_SUCCESS, AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .permissions(user.getUserTypes().getPermissions())
                 .build());
     }
 
@@ -122,6 +124,10 @@ public class AuthenticationService {
     }
 
     public AUTHResponse register(UserDTO userDTO, int type) {
+        if (!isValidGmail(userDTO.getEmail())) {
+            return AUTHResponse.fail(Constant.GMAIL_VALID);
+        }
+
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
             return AUTHResponse.fail(Constant.USER_REGISTERED);
         }
@@ -150,6 +156,12 @@ public class AuthenticationService {
         return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
     }
 
+    private boolean isValidGmail(String email) {
+        String gmailRegex = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
+        return Pattern.compile(gmailRegex).matcher(email).matches();
+    }
+
+    // Reference Code For Date Girl
     private String generateUserCode(String name, long amount) {
         String[] nameParts = name.split(" ");
         StringBuilder initials = new StringBuilder();

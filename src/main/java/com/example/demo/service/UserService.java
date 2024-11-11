@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public AUTHResponse register(UserDTO userDTO, int type) {
+        if (!isValidGmail(userDTO.getEmail())) {
+            return AUTHResponse.fail(Constant.GMAIL_VALID);
+        }
+
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
             return AUTHResponse.fail(Constant.USER_REGISTERED);
         }
@@ -48,6 +53,9 @@ public class UserService {
                 user = userRepository.save(user);
                 break;
             case 3:
+                if (!Objects.equals(adminCode, userDTO.getAdminCode())) {
+                    return AUTHResponse.fail(Constant.ADMIN_CODE);
+                }
                 user = UserMapper.toEntityForAdmin(userDTO, passwordEncoder);
                 user = userRepository.save(user);
                 break;
@@ -55,6 +63,11 @@ public class UserService {
                 return AUTHResponse.fail(Constant.INVALID_USER_TYPE);
         }
         return AUTHResponse.success(Constant.USER_REGISTER_SUCCESS, UserMapper.toDto(user));
+    }
+
+    private boolean isValidGmail(String email) {
+        String gmailRegex = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
+        return Pattern.compile(gmailRegex).matcher(email).matches();
     }
 
     private String generateUserCode(String name, long amount) {

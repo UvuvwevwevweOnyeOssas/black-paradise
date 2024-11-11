@@ -18,6 +18,7 @@ public class Constant {
     public static final String PASSWORD_NOT_MATCH = "Your password and old password from system is not match.";
     public static final String PASSWORD_UPDATED = "Your password updated in system.";
     public static final String ADMIN_CODE = "Your code must be equal.";
+    public static final String GMAIL_VALID = "Only gmail accounts are allowed for registration.";
     /*user*/
     /*purchase*/
     public static final String PURCHASE_SAVED = "Purchase inserted in system.";
