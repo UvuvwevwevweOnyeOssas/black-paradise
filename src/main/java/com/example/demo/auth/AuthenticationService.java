@@ -131,6 +131,7 @@ public class AuthenticationService {
         if (userRepository.existsByEmailAndPhoneNum(userDTO.getEmail(), userDTO.getPhoneNum())) {
             return AUTHResponse.fail(Constant.USER_REGISTERED);
         }
+
         User user;
         switch (type) {
             case 1:

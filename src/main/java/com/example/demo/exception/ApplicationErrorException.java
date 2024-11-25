@@ -12,8 +12,7 @@ import java.io.IOException;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationErrorException extends RuntimeException {
-	private String msg;
-
+    private String msg;
     public ApplicationErrorException(String errorSavingImageFile, IOException e) {
     }
 }

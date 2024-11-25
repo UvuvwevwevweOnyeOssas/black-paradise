@@ -18,5 +18,4 @@ public class FileUtil {
         FileUtils.writeByteArrayToFile(dest, multipartFile.getBytes());
         return relativePath + fileNameUp;
     }
-
 }
